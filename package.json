@@ -1,0 +1,25 @@
+{
+  "name": "react-router-native-stack",
+  "version": "0.0.1",
+  "description": "A stack navigation component for react-router-native",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Traviskn/react-router-native-stack.git"
+  },
+  "keywords": [
+    "react",
+    "router",
+    "navigation",
+    "react-native"
+  ],
+  "author": "Travis Nuttall",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Traviskn/react-router-native-stack/issues"
+  },
+  "homepage": "https://github.com/Traviskn/react-router-native-stack#readme"
+}

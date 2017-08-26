@@ -1,0 +1,10 @@
+*.DS_Store
+.DS_Store
+.gradle
+*.iml
+.idea
+node_modules
+npm-debug.log
+android/build
+ios/**/*xcuserdata*
+ios/**/*xcshareddata*
