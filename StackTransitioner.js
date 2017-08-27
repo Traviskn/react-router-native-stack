@@ -108,7 +108,7 @@ export default class StackTransitioner extends Component {
   componentWillReceiveProps(nextProps) {
     // New route comes in after a swipe gesture begins. Save the children so we
     // can render both routes during the transition.
-    // Don't trigger the timing animation if user is swiping, let the gesture
+    // Don't trigger the timing animation if the user is swiping, let the gesture
     // control the animation.
     if (this.isPanning) {
       if (this.state.previousChildren === null) {
@@ -174,21 +174,35 @@ export default class StackTransitioner extends Component {
   }
 
   renderHeader() {
-    // TODO: Add more header configuration options
-    // - title
-    // - right/left button
-    // - Allow rendering a custom header
-    return (
-      <Header
-        goBack={this.props.history.goBack}
-        showBack={this.props.history.index > this.startingIndex && this.props.history.canGo(-1)}
-        animation={this.animation}
-        animationMax={this.props.width}
-        animationMin={-this.props.width}
-        transition={this.state.transition}
-        isPanning={this.isPanning}
-      />
-    );
+    const {
+      history,
+      location,
+      width,
+      renderHeader,
+      renderTitle,
+      renderLeftSegment,
+      renderRightSegment,
+    } = this.props;
+
+    const headerProps = {
+      goBack: this.props.history.goBack,
+      showBack: history.index > this.startingIndex && history.canGo(-1),
+      animation: this.animation,
+      animationMax: width,
+      animationMin: -width,
+      transition: this.state.transition,
+      isPanning: this.isPanning,
+      location,
+      renderTitle,
+      renderLeftSegment,
+      renderRightSegment,
+    };
+
+    if (typeof renderHeader === 'function') {
+      return renderHeader(headerProps);
+    }
+
+    return <Header {...headerProps} />;
   }
 
   render() {

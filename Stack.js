@@ -10,6 +10,10 @@ class Stack extends Component {
     children: PropTypes.node,
     location: PropTypes.object,
     history: PropTypes.object,
+    renderHeader: PropTypes.func,
+    renderTitle: PropTypes.func,
+    renderLeftSegment: PropTypes.func,
+    renderRightSegment: PropTypes.func,
   };
 
   state = {
@@ -23,15 +27,31 @@ class Stack extends Component {
   };
 
   render() {
+    const {
+      children,
+      location,
+      history,
+      renderHeader,
+      renderTitle,
+      renderLeftSegment,
+      renderRightSegment,
+    } = this.props;
+
+    const { height, width } = this.state;
+
     return (
       <View style={styles.transitionContainer} onLayout={this.onLayout}>
         <StackTransitioner
-          location={this.props.location}
-          history={this.props.history}
-          height={this.state.height}
-          width={this.state.width}>
-          <Switch location={this.props.location}>
-            {this.props.children}
+          location={location}
+          history={history}
+          height={height}
+          width={width}
+          renderHeader={renderHeader}
+          renderTitle={renderTitle}
+          renderLeftSegment={renderLeftSegment}
+          renderRightSegment={renderRightSegment}>
+          <Switch location={location}>
+            {children}
           </Switch>
         </StackTransitioner>
       </View>

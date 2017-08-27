@@ -4,7 +4,6 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    paddingTop: 20,
     backgroundColor: 'white',
   },
   linkText: {
