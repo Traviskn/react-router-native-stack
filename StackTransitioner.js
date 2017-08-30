@@ -13,8 +13,9 @@ const GESTURE_RESPONSE_DISTANCE_HORIZONTAL = 40;
 export default class StackTransitioner extends Component {
   static propTypes = {
     children: PropTypes.node,
-    location: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
     width: PropTypes.number.isRequired,
   };
 
@@ -174,32 +175,24 @@ export default class StackTransitioner extends Component {
   }
 
   renderHeader() {
-    const {
-      history,
-      location,
-      width,
-      renderHeader,
-      renderTitle,
-      renderLeftSegment,
-      renderRightSegment,
-    } = this.props;
-
     const headerProps = {
       goBack: this.props.history.goBack,
-      showBack: history.index > this.startingIndex && history.canGo(-1),
+      showBack: this.props.history.index > this.startingIndex && this.props.history.canGo(-1),
       animation: this.animation,
-      animationMax: width,
-      animationMin: -width,
+      animationMax: this.props.width,
+      animationMin: -this.props.width,
       transition: this.state.transition,
       isPanning: this.isPanning,
-      location,
-      renderTitle,
-      renderLeftSegment,
-      renderRightSegment,
+      history: this.props.history,
+      location: this.props.location,
+      match: this.props.match,
+      renderTitle: this.props.renderTitle,
+      renderLeftSegment: this.props.renderLeftSegment,
+      renderRightSegment: this.props.renderRightSegment,
     };
 
-    if (typeof renderHeader === 'function') {
-      return renderHeader(headerProps);
+    if (typeof this.props.renderHeader === 'function') {
+      return this.props.renderHeader(headerProps);
     }
 
     return <Header {...headerProps} />;
@@ -209,15 +202,15 @@ export default class StackTransitioner extends Component {
     const { children, width } = this.props;
     const { previousChildren, transition } = this.state;
     const { stackView } = styles;
-    const transform = { transform: [{ translateX: this.animation }] };
+    const transform = { transform: [{ translateX: this.animation }], elevation: 4 };
     const offscreen = { left: width, right: -width };
 
     let routes = [];
     if (transition === 'PUSH') {
       routes.push(
-        <Animated.View style={stackView}>
+        <View style={stackView}>
           {previousChildren}
-        </Animated.View>
+        </View>
       );
       routes.push(
         <Animated.View style={[stackView, offscreen, transform]}>
@@ -226,9 +219,9 @@ export default class StackTransitioner extends Component {
       );
     } else if (transition === 'POP' || this.isPanning) {
       routes.push(
-        <Animated.View style={stackView}>
+        <View style={stackView}>
           {children}
-        </Animated.View>
+        </View>
       );
       routes.push(
         <Animated.View style={[stackView, transform]}>

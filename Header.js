@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Animated, Text, TouchableHighlight, View } from 'react-native';
+import { Animated, Image, TouchableHighlight, View } from 'react-native';
 import styles from './styles';
+import icon from './assets/back-icon.png';
 
 export default class Header extends Component {
   static propTypes = {
@@ -12,7 +13,9 @@ export default class Header extends Component {
     animationMin: PropTypes.number,
     transition: PropTypes.string,
     isPanning: PropTypes.bool,
+    history: PropTypes.object,
     location: PropTypes.object,
+    match: PropTypes.object,
     renderTitle: PropTypes.func,
     renderLeftSegment: PropTypes.func,
     renderRightSegment: PropTypes.func,
@@ -41,7 +44,13 @@ export default class Header extends Component {
     }
     return showBack
       ? <TouchableHighlight onPress={this.props.goBack}>
-          <Text style={styles.backText}>&lt;</Text>
+          <Image
+            source={icon}
+            style={{
+              height: 21,
+              width: 13,
+            }}
+          />
         </TouchableHighlight>
       : null;
   }
@@ -75,7 +84,6 @@ export default class Header extends Component {
     if (transition || isPanning) {
       const thisHeader = (
         <Animated.View
-          key="this-header"
           style={[
             styles.header,
             styles.animatingHeader,
@@ -92,7 +100,6 @@ export default class Header extends Component {
 
       const previousHeader = (
         <Animated.View
-          key="previous-header"
           style={[
             styles.header,
             styles.animatingHeader,
@@ -115,11 +122,18 @@ export default class Header extends Component {
         headers.push(thisHeader);
         headers.push(previousHeader);
       }
+
+      return (
+        <View style={styles.header}>
+          {headers[0]}
+          {headers[1]}
+        </View>
+      );
     }
 
     return (
       <View style={styles.header}>
-        {headers.length ? headers.map(h => h) : this.renderInnerHeader(showBack)}
+        {this.renderInnerHeader(showBack)}
       </View>
     );
   }

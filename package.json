@@ -15,7 +15,8 @@
     "Stack.js",
     "StackTransitioner.js",
     "Header.js",
-    "styles.js"
+    "styles.js",
+    "assets/"
   ],
   "keywords": [
     "react",

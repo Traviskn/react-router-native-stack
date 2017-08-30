@@ -8,8 +8,9 @@ import styles from './styles';
 class Stack extends Component {
   static propTypes = {
     children: PropTypes.node,
-    location: PropTypes.object,
     history: PropTypes.object,
+    location: PropTypes.object,
+    match: PropTypes.object,
     renderHeader: PropTypes.func,
     renderTitle: PropTypes.func,
     renderLeftSegment: PropTypes.func,
@@ -29,8 +30,9 @@ class Stack extends Component {
   render() {
     const {
       children,
-      location,
       history,
+      location,
+      match,
       renderHeader,
       renderTitle,
       renderLeftSegment,
@@ -42,8 +44,9 @@ class Stack extends Component {
     return (
       <View style={styles.transitionContainer} onLayout={this.onLayout}>
         <StackTransitioner
-          location={location}
           history={history}
+          location={location}
+          match={match}
           height={height}
           width={width}
           renderHeader={renderHeader}
