@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { node, object, number, bool } from 'prop-types';
 import { Animated, Easing, PanResponder, View } from 'react-native';
 import Header from './Header';
 import styles from './styles';
@@ -12,11 +12,13 @@ const GESTURE_RESPONSE_DISTANCE_HORIZONTAL = 40;
 
 export default class StackTransitioner extends Component {
   static propTypes = {
-    children: PropTypes.node,
-    history: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired,
-    width: PropTypes.number.isRequired,
+    children: node,
+    history: object.isRequired,
+    location: object.isRequired,
+    match: object.isRequired,
+    width: number.isRequired,
+    animate: bool,
+    gestureEnabled: bool,
   };
 
   state = {
@@ -33,6 +35,7 @@ export default class StackTransitioner extends Component {
   panResponder = PanResponder.create({
     onMoveShouldSetPanResponder: (event, gesture) => {
       return (
+        this.props.gestureEnabled &&
         this.props.history.index > this.startingIndex &&
         this.props.history.canGo(-1) &&
         event.nativeEvent.pageX < GESTURE_RESPONSE_DISTANCE_HORIZONTAL &&
@@ -107,6 +110,9 @@ export default class StackTransitioner extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (!this.props.animate) {
+      return;
+    }
     // New route comes in after a swipe gesture begins. Save the children so we
     // can render both routes during the transition.
     // Don't trigger the timing animation if the user is swiping, let the gesture

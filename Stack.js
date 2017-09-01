@@ -1,20 +1,27 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import PropTypes from 'prop-types';
+import { node, object, bool, func } from 'prop-types';
 import { Switch, withRouter } from 'react-router-native';
 import StackTransitioner from './StackTransitioner';
 import styles from './styles';
 
 class Stack extends Component {
   static propTypes = {
-    children: PropTypes.node,
-    history: PropTypes.object,
-    location: PropTypes.object,
-    match: PropTypes.object,
-    renderHeader: PropTypes.func,
-    renderTitle: PropTypes.func,
-    renderLeftSegment: PropTypes.func,
-    renderRightSegment: PropTypes.func,
+    children: node,
+    history: object,
+    location: object,
+    match: object,
+    renderHeader: func,
+    renderTitle: func,
+    renderLeftSegment: func,
+    renderRightSegment: func,
+    animate: bool,
+    gestureEnabled: bool,
+  };
+
+  static defaultProps = {
+    animate: true,
+    gestureEnabled: true,
   };
 
   state = {
@@ -37,6 +44,8 @@ class Stack extends Component {
       renderTitle,
       renderLeftSegment,
       renderRightSegment,
+      animate,
+      gestureEnabled,
     } = this.props;
 
     const { height, width } = this.state;
@@ -52,7 +61,9 @@ class Stack extends Component {
           renderHeader={renderHeader}
           renderTitle={renderTitle}
           renderLeftSegment={renderLeftSegment}
-          renderRightSegment={renderRightSegment}>
+          renderRightSegment={renderRightSegment}
+          animate={animate}
+          gestureEnabled={gestureEnabled}>
           <Switch location={location}>
             {children}
           </Switch>

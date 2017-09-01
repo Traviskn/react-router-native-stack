@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Animated, Image, TouchableHighlight, View } from 'react-native';
+import { Animated, Image, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 import icon from './assets/back-icon.png';
 
@@ -43,7 +43,7 @@ export default class Header extends Component {
       return this.props.renderLeftSegment({ ...this.props, showBack });
     }
     return showBack
-      ? <TouchableHighlight onPress={this.props.goBack}>
+      ? <TouchableOpacity onPress={this.props.goBack}>
           <Image
             source={icon}
             style={{
@@ -51,7 +51,7 @@ export default class Header extends Component {
               width: 13,
             }}
           />
-        </TouchableHighlight>
+        </TouchableOpacity>
       : null;
   }
 
