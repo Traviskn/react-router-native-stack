@@ -165,7 +165,7 @@ export default class StackTransitioner extends Component {
           Animated.timing(this.animation, {
             duration: ANIMATION_DURATION,
             toValue: history.action === 'PUSH' ? -width : width,
-            easing: Easing.bezier(0.2833, 0.99, 0.31833, 0.99),
+            // easing: Easing.bezier(0.2833, 0.99, 0.31833, 0.99),
             useNativeDriver: true,
           }).start(() => {
             this.setState({
@@ -204,6 +204,39 @@ export default class StackTransitioner extends Component {
     return <Header {...headerProps} />;
   }
 
+  _getTransformsFor = i => {
+    const { width } = this.props;
+
+    let pageX = width * i;
+
+    let translateX = this.animation.interpolate({
+      inputRange: [pageX - width, pageX, pageX + width],
+      outputRange: [-width / 2, 0, width / 2],
+      extrapolate: 'clamp',
+    });
+
+    let rotateY = this.animation.interpolate({
+      inputRange: [pageX - width, pageX, pageX + width],
+      outputRange: ['-60deg', '0deg', '60deg'],
+      extrapolate: 'clamp',
+    });
+
+    let translateXAfterRotate = this.animation.interpolate({
+      inputRange: [pageX - width, pageX - width + 0.1, pageX, pageX + width - 0.1, pageX + width],
+      outputRange: [-width, -width / 2.38, 0, width / 2.38, width],
+      extrapolate: 'clamp',
+    });
+
+    return {
+      transform: [
+        { perspective: width },
+        { translateX },
+        { rotateY },
+        { translateX: translateXAfterRotate },
+      ],
+    };
+  };
+
   render() {
     const { children, width } = this.props;
     const { previousChildren, transition } = this.state;
@@ -214,23 +247,23 @@ export default class StackTransitioner extends Component {
     let routes = [];
     if (transition === 'PUSH') {
       routes.push(
-        <View style={stackView}>
+        <Animated.View style={[stackView, this._getTransformsFor(0)]}>
           {previousChildren}
-        </View>
+        </Animated.View>
       );
       routes.push(
-        <Animated.View style={[stackView, offscreen, transform]}>
+        <Animated.View style={[stackView, { elevation: 1 }, this._getTransformsFor(-1)]}>
           {children}
         </Animated.View>
       );
     } else if (transition === 'POP' || this.isPanning) {
       routes.push(
-        <View style={stackView}>
+        <Animated.View style={[stackView, { elevation: 1 }, this._getTransformsFor(1)]}>
           {children}
-        </View>
+        </Animated.View>
       );
       routes.push(
-        <Animated.View style={[stackView, transform]}>
+        <Animated.View style={[stackView, this._getTransformsFor(0)]}>
           {previousChildren}
         </Animated.View>
       );
@@ -238,7 +271,7 @@ export default class StackTransitioner extends Component {
       return (
         <View style={stackView} {...this.panResponder.panHandlers}>
           {children}
-          {this.renderHeader()}
+          {/*this.renderHeader()*/}
         </View>
       );
     }
@@ -249,7 +282,7 @@ export default class StackTransitioner extends Component {
           {routes[0]}
           {routes[1]}
         </View>
-        {this.renderHeader()}
+        {/*this.renderHeader()*/}
       </View>
     );
   }
