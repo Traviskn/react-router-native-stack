@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { node, object, number, bool } from 'prop-types';
+import { node, object, number, bool, string } from 'prop-types';
 import { Animated, Easing, PanResponder, View } from 'react-native';
 import Header from './Header';
 import styles from './styles';
+import getTransforms from './getTransforms';
+import getEasing from './getEasing';
 
 const ANIMATION_DURATION = 500;
 const POSITION_THRESHOLD = 1 / 2;
@@ -15,8 +17,8 @@ export default class StackTransitioner extends Component {
     children: node,
     history: object.isRequired,
     location: object.isRequired,
-    match: object.isRequired,
     width: number.isRequired,
+    animationType: string.isRequired,
     animate: bool,
     gestureEnabled: bool,
   };
@@ -48,8 +50,6 @@ export default class StackTransitioner extends Component {
       this.props.history.goBack();
     },
 
-    // No idea why this Animated.event isn't working...
-    // onPanResponderMove: Animated.event([null, { moveX: this.animation }]),
     onPanResponderMove: (event, { moveX }) => {
       this.animation.setValue(moveX);
     },
@@ -123,20 +123,7 @@ export default class StackTransitioner extends Component {
       }
       return;
     }
-    // NOTE: We can't assume that the next location matches any routes in the switch
-    // This means that users will need to wrap the stack in a route component
-    // that stops matching if they need to navigate to a route not contained in
-    // the stack.
 
-    // TODO: Consider a master/detail view with a stack on the left, and a detail
-    // screen on the right.  You want both the stack and the detail to match at the
-    // same time, but you don't necessarily always want the stack to transition.
-    // For example if you are drilling down through categories, you want the
-    // stack to slide transition as you select categories, but then once you
-    // select items you only want the detail to update and not for the stack
-    // to slide.
-    // It seems we may need some prop or url param to tell the stack to not
-    // transition
     const { history } = nextProps;
     const { location, children, width } = this.props;
 
@@ -165,7 +152,7 @@ export default class StackTransitioner extends Component {
           Animated.timing(this.animation, {
             duration: ANIMATION_DURATION,
             toValue: history.action === 'PUSH' ? -width : width,
-            // easing: Easing.bezier(0.2833, 0.99, 0.31833, 0.99),
+            easing: getEasing(this.props.animationType),
             useNativeDriver: true,
           }).start(() => {
             this.setState({
@@ -180,90 +167,31 @@ export default class StackTransitioner extends Component {
     }
   }
 
-  renderHeader() {
-    const headerProps = {
-      goBack: this.props.history.goBack,
-      showBack: this.props.history.index > this.startingIndex && this.props.history.canGo(-1),
-      animation: this.animation,
-      animationMax: this.props.width,
-      animationMin: -this.props.width,
-      transition: this.state.transition,
-      isPanning: this.isPanning,
-      history: this.props.history,
-      location: this.props.location,
-      match: this.props.match,
-      renderTitle: this.props.renderTitle,
-      renderLeftSegment: this.props.renderLeftSegment,
-      renderRightSegment: this.props.renderRightSegment,
-    };
-
-    if (typeof this.props.renderHeader === 'function') {
-      return this.props.renderHeader(headerProps);
-    }
-
-    return <Header {...headerProps} />;
-  }
-
-  _getTransformsFor = i => {
-    const { width } = this.props;
-
-    let pageX = width * i;
-
-    let translateX = this.animation.interpolate({
-      inputRange: [pageX - width, pageX, pageX + width],
-      outputRange: [-width / 2, 0, width / 2],
-      extrapolate: 'clamp',
-    });
-
-    let rotateY = this.animation.interpolate({
-      inputRange: [pageX - width, pageX, pageX + width],
-      outputRange: ['-60deg', '0deg', '60deg'],
-      extrapolate: 'clamp',
-    });
-
-    let translateXAfterRotate = this.animation.interpolate({
-      inputRange: [pageX - width, pageX - width + 0.1, pageX, pageX + width - 0.1, pageX + width],
-      outputRange: [-width, -width / 2.38, 0, width / 2.38, width],
-      extrapolate: 'clamp',
-    });
-
-    return {
-      transform: [
-        { perspective: width },
-        { translateX },
-        { rotateY },
-        { translateX: translateXAfterRotate },
-      ],
-    };
-  };
-
   render() {
-    const { children, width } = this.props;
+    const { children, width, animationType } = this.props;
     const { previousChildren, transition } = this.state;
     const { stackView } = styles;
-    const transform = { transform: [{ translateX: this.animation }], elevation: 4 };
-    const offscreen = { left: width, right: -width };
 
     let routes = [];
     if (transition === 'PUSH') {
       routes.push(
-        <Animated.View style={[stackView, this._getTransformsFor(0)]}>
+        <Animated.View style={[stackView, getTransforms(width, this.animation, animationType, transition, 0)]}>
           {previousChildren}
         </Animated.View>
       );
       routes.push(
-        <Animated.View style={[stackView, { elevation: 1 }, this._getTransformsFor(-1)]}>
+        <Animated.View style={[stackView, getTransforms(width, this.animation, animationType, transition, 1)]}>
           {children}
         </Animated.View>
       );
     } else if (transition === 'POP' || this.isPanning) {
       routes.push(
-        <Animated.View style={[stackView, { elevation: 1 }, this._getTransformsFor(1)]}>
+        <Animated.View style={[stackView, getTransforms(width, this.animation, animationType, 'POP', 0)]}>
           {children}
         </Animated.View>
       );
       routes.push(
-        <Animated.View style={[stackView, this._getTransformsFor(0)]}>
+        <Animated.View style={[stackView, getTransforms(width, this.animation, animationType, 'POP', 1)]}>
           {previousChildren}
         </Animated.View>
       );
@@ -271,7 +199,6 @@ export default class StackTransitioner extends Component {
       return (
         <View style={stackView} {...this.panResponder.panHandlers}>
           {children}
-          {/*this.renderHeader()*/}
         </View>
       );
     }
@@ -282,7 +209,6 @@ export default class StackTransitioner extends Component {
           {routes[0]}
           {routes[1]}
         </View>
-        {/*this.renderHeader()*/}
       </View>
     );
   }
