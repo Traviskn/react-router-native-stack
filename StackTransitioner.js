@@ -166,44 +166,55 @@ export default class StackTransitioner extends Component {
     }
   }
 
+  getRouteStyle = index => {
+    const { width, animationType } = this.props;
+    const { transition } = this.state;
+    const { animation, isPanning } = this;
+    const transitionType = isPanning ? 'POP' : transition;
+
+    return [
+      styles.stackView,
+      getTransforms(width, animation, animationType, transitionType, index),
+    ];
+  };
+
   render() {
-    const { children, width, animationType } = this.props;
+    const { children } = this.props;
     const { previousChildren, transition } = this.state;
-    const { stackView } = styles;
 
     let routes = [];
     if (transition === 'PUSH') {
       routes.push(
-        <Animated.View style={[stackView, getTransforms(width, this.animation, animationType, transition, 0)]}>
+        <Animated.View style={this.getRouteStyle(0)}>
           {previousChildren}
         </Animated.View>
       );
       routes.push(
-        <Animated.View style={[stackView, getTransforms(width, this.animation, animationType, transition, 1)]}>
+        <Animated.View style={this.getRouteStyle(1)}>
           {children}
         </Animated.View>
       );
     } else if (transition === 'POP' || this.isPanning) {
       routes.push(
-        <Animated.View style={[stackView, getTransforms(width, this.animation, animationType, 'POP', 0)]}>
+        <Animated.View style={this.getRouteStyle(0)}>
           {children}
         </Animated.View>
       );
       routes.push(
-        <Animated.View style={[stackView, getTransforms(width, this.animation, animationType, 'POP', 1)]}>
+        <Animated.View style={this.getRouteStyle(1)}>
           {previousChildren}
         </Animated.View>
       );
     } else {
       return (
-        <View style={stackView} {...this.panResponder.panHandlers}>
+        <View style={styles.stackView} {...this.panResponder.panHandlers}>
           {children}
         </View>
       );
     }
 
     return (
-      <View style={stackView} {...this.panResponder.panHandlers}>
+      <View style={styles.stackView} {...this.panResponder.panHandlers}>
         <View style={styles.transitionContainer}>
           {routes[0]}
           {routes[1]}
