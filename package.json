@@ -14,16 +14,15 @@
     "index.js",
     "Stack.js",
     "StackTransitioner.js",
-    "Header.js",
     "getEasing.js",
     "getTransforms.js",
-    "styles.js",
-    "assets/"
+    "styles.js"
   ],
   "keywords": [
     "react",
     "router",
     "navigation",
+    "react-router",
     "react-native"
   ],
   "author": "Travis Nuttall",

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { node, object, number, bool, string } from 'prop-types';
-import { Animated, Easing, PanResponder, View } from 'react-native';
-import Header from './Header';
-import styles from './styles';
+import { Animated, PanResponder, View } from 'react-native';
 import getTransforms from './getTransforms';
 import getEasing from './getEasing';
+import styles from './styles';
 
 const ANIMATION_DURATION = 500;
 const POSITION_THRESHOLD = 1 / 2;
