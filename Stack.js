@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { node, object, bool, func } from 'prop-types';
+import { node, object, bool, string, func } from 'prop-types';
 import { Switch, withRouter } from 'react-router-native';
 import StackTransitioner from './StackTransitioner';
 import styles from './styles';
@@ -10,16 +10,17 @@ class Stack extends Component {
     children: node,
     history: object,
     location: object,
-    match: object,
     renderHeader: func,
     renderTitle: func,
     renderLeftSegment: func,
     renderRightSegment: func,
+    animationType: string,
     animate: bool,
     gestureEnabled: bool,
   };
 
   static defaultProps = {
+    animationType: 'slide-horizontal',
     animate: true,
     gestureEnabled: true,
   };
@@ -39,11 +40,11 @@ class Stack extends Component {
       children,
       history,
       location,
-      match,
       renderHeader,
       renderTitle,
       renderLeftSegment,
       renderRightSegment,
+      animationType,
       animate,
       gestureEnabled,
     } = this.props;
@@ -55,13 +56,13 @@ class Stack extends Component {
         <StackTransitioner
           history={history}
           location={location}
-          match={match}
           height={height}
           width={width}
           renderHeader={renderHeader}
           renderTitle={renderTitle}
           renderLeftSegment={renderLeftSegment}
           renderRightSegment={renderRightSegment}
+          animationType={animationType}
           animate={animate}
           gestureEnabled={gestureEnabled}>
           <Switch location={location}>
