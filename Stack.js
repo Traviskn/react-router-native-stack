@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { node, object, bool, string, func } from 'prop-types';
 import { Switch, withRouter } from 'react-router-native';
 import StackTransitioner from './StackTransitioner';
-import { SLIDE_HORIZONTAL } from './animationTypes';
+import { SLIDE_HORIZONTAL, FADE_VERTICAL } from './animationTypes';
 import styles from './styles';
 
 class Stack extends Component {
@@ -21,7 +21,7 @@ class Stack extends Component {
   };
 
   static defaultProps = {
-    animationType: SLIDE_HORIZONTAL,
+    animationType: Platform.OS === 'ios' ? SLIDE_HORIZONTAL : FADE_VERTICAL,
     animate: true,
     gestureEnabled: true,
   };
