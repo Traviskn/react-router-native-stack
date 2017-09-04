@@ -1,26 +1,60 @@
 import React from 'react';
-import { Text, TouchableHighlight, View } from 'react-native';
+import {
+  Container,
+  Header,
+  Left,
+  Body,
+  Right,
+  Title,
+  Content,
+  Button,
+  Icon,
+  Text,
+  List,
+  ListItem,
+} from 'native-base';
 import { Link } from 'react-router-native';
-import styles from './styles';
 
 const messages = ['Hello', 'Lunch', 'Meeting'];
 
 export default function Messages({ history }) {
   return (
-    <View style={styles.screen}>
-      <Text>Messages</Text>
+    <Container>
+      <Header>
+        <Left>
+          <Button transparent onPress={history.goBack}>
+            <Icon name="arrow-back" />
+          </Button>
+        </Left>
 
-      <TouchableHighlight onPress={history.goBack}>
-        <Text style={styles.backText}>Go Back</Text>
-      </TouchableHighlight>
+        <Body>
+          <Title>Messages</Title>
+        </Body>
 
-      {messages.map(message =>
-        <Link key={message} to={`/messages/${message}`}>
-          <Text style={styles.linkText}>
-            {message}
-          </Text>
-        </Link>
-      )}
-    </View>
+        <Right />
+      </Header>
+
+      <Content>
+        <List
+          dataArray={messages}
+          renderRow={message => (
+            <Link
+              key={message}
+              to={`/messages/${message}`}
+              component={({ onPress }) => (
+                <ListItem icon onPress={onPress}>
+                  <Body>
+                    <Text>{message}</Text>
+                  </Body>
+                  <Right>
+                    <Icon name="arrow-forward" />
+                  </Right>
+                </ListItem>
+              )}
+            />
+          )}
+        />
+      </Content>
+    </Container>
   );
 }

@@ -1,17 +1,43 @@
 import React from 'react';
-import { Text, TouchableHighlight, View } from 'react-native';
-import styles from './styles';
+import {
+  Container,
+  Header,
+  Left,
+  Body,
+  Right,
+  Title,
+  Content,
+  Button,
+  Icon,
+  Card,
+  CardItem,
+  Text,
+} from 'native-base';
 
 export default function Message({ match, history }) {
   return (
-    <View style={styles.screen}>
-      <TouchableHighlight onPress={history.goBack}>
-        <Text style={styles.backText}>Go Back</Text>
-      </TouchableHighlight>
+    <Container>
+      <Header>
+        <Left>
+          <Button transparent onPress={history.goBack}>
+            <Icon name="arrow-back" />
+          </Button>
+        </Left>
 
-      <Text>
-        {match.params.messageId}
-      </Text>
-    </View>
+        <Body>
+          <Title>Message</Title>
+        </Body>
+
+        <Right />
+      </Header>
+
+      <Content padder>
+        <Card>
+          <CardItem>
+            <Text>{match.params.messageId}</Text>
+          </CardItem>
+        </Card>
+      </Content>
+    </Container>
   );
 }

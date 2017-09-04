@@ -1,19 +1,42 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import {
+  Container,
+  Header,
+  Left,
+  Body,
+  Right,
+  Title,
+  Content,
+  Button,
+  Icon,
+  Text,
+} from 'native-base';
 import { Link } from 'react-router-native';
-import styles from './styles';
 
 export default function Home() {
   return (
-    <View style={styles.screen}>
-      <Text>Home Screen</Text>
+    <Container>
+      <Header>
+        <Left />
 
-      <Link to="/messages">
-        <Text style={styles.linkText}>View Messages</Text>
-      </Link>
-      <Link to="/nomatch">
-        <Text style={styles.linkText}>Go To Non-Matching Route</Text>
-      </Link>
-    </View>
+        <Body>
+          <Title>Home</Title>
+        </Body>
+
+        <Right />
+      </Header>
+
+      <Content padder>
+        <Link
+          to="/messages"
+          component={({ onPress }) => (
+            <Button block iconRight onPress={onPress}>
+              <Text>View Messages</Text>
+              <Icon name="arrow-forward" />
+            </Button>
+          )}
+        />
+      </Content>
+    </Container>
   );
 }
