@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { node, object, bool, string, func } from 'prop-types';
 import { Switch, withRouter } from 'react-router-native';
 import StackTransitioner from './StackTransitioner';
+import { SLIDE_HORIZONTAL } from './animationTypes';
 import styles from './styles';
 
 class Stack extends Component {
@@ -20,7 +21,7 @@ class Stack extends Component {
   };
 
   static defaultProps = {
-    animationType: 'slide-horizontal',
+    animationType: SLIDE_HORIZONTAL,
     animate: true,
     gestureEnabled: true,
   };
