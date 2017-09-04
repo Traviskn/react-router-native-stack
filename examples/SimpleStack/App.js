@@ -8,15 +8,11 @@ import Messages from './Messages';
 import styles from './styles';
 
 export default class App extends Component {
-  renderTitle = ({ match }) => {
-    // TODO: add the match to the arguments passed to render title
-  };
-
   render() {
     return (
       <NativeRouter>
         <View style={styles.container}>
-          <Stack renderTitle={this.renderTitle}>
+          <Stack animationType="cube">
             <Route exact path="/" component={Home} />
             <Route exact path="/messages" component={Messages} />
             <Route path="/messages/:messageId" component={Message} />
