@@ -15,11 +15,13 @@ React Router v4 supports react native, but doesn't include any animated transiti
 out of the box.  I created this component to support card stack style screen transitions.
 
 Here's a basic demo:
+
 ![SimpleStack Example Screen Capture](https://raw.githubusercontent.com/traviskn/react-router-native-stack/master/media/simple-stack-ios.gif)
 
 ## Installation
 
 Install `react-router-native` and this package:
+
 `npm install react-router-native react-router-native-stack --save`
 
 ## Usage
@@ -49,7 +51,7 @@ function Home({ history }) {
 function Page({ history, match }) {
   return (
     <View style={styles.screen}>
-      <Text>You're on a {match.params.name} Page!</Text>
+      <Text>You are on a {match.params.name} Page!</Text>
 
       <Button title="Go Back" color="red" onPress={() => history.goBack()} />
 
@@ -106,8 +108,8 @@ if you add an `animationType="slide-vertical"` prop to the stack in the previous
 example, this is the result:
 
 ![Slide Vertical Usage Example Screen Capture](https://raw.githubusercontent.com/traviskn/react-router-native-stack/master/media/slide-vertical-ios.gif)
-
 `'fade-vertical'` is the default for Android, and looks like this:
+
 ![Fade Vertical Usage Example Screen Capture](https://raw.githubusercontent.com/traviskn/react-router-native-stack/master/media/fade-vertical-android.gif)
 
 And finally, here's a demo of `animationType="cube"`:
