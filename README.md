@@ -18,6 +18,8 @@ Here's a basic demo:
 
 ![SimpleStack Example Screen Capture](https://raw.githubusercontent.com/traviskn/react-router-native-stack/master/media/simple-stack-ios.gif)
 
+You can run the above demo on Expo with this link: https://exp.host/@traviskn/simplestack
+
 ## Installation
 
 Install `react-router-native` and this package:
