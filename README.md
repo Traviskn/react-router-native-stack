@@ -108,6 +108,7 @@ if you add an `animationType="slide-vertical"` prop to the stack in the previous
 example, this is the result:
 
 ![Slide Vertical Usage Example Screen Capture](https://raw.githubusercontent.com/traviskn/react-router-native-stack/master/media/slide-vertical-ios.gif)
+
 `'fade-vertical'` is the default for Android, and looks like this:
 
 ![Fade Vertical Usage Example Screen Capture](https://raw.githubusercontent.com/traviskn/react-router-native-stack/master/media/fade-vertical-android.gif)
@@ -165,6 +166,13 @@ by @underscopeio as a reference.
 Many thanks to the authors and maintainers of these open source libraries!
 
 ## More
+
+You may be asking, "What about tab and drawer navigation?".  As it turns out,
+there are already many great open source components to enable drawer and tab
+navigation, and you can already use React Router to drive the state of those
+components.  I hope to add more examples to this repository soon demonstrating
+this. For now know that the Stack is just one of several components that you can
+combine with React Router to enable just about any navigation pattern you need!
 
 Check out the `examples/` folder in this repository for more usage examples.
 
