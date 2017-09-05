@@ -1,6 +1,6 @@
 {
   "name": "react-router-native-stack",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A stack navigation component for react-router-native",
   "main": "lib/index.js",
   "scripts": {
@@ -10,7 +10,9 @@
     "type": "git",
     "url": "https://github.com/Traviskn/react-router-native-stack.git"
   },
-  "files":["lib/"],
+  "files": [
+    "lib/"
+  ],
   "keywords": [
     "react",
     "router",
