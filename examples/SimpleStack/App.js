@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { NativeRouter, Route } from 'react-router-native';
 import Stack from 'react-router-native-stack';
-import { Container } from 'native-base';
 import Home from './Home';
 import Message from './Message';
 import Messages from './Messages';
