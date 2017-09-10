@@ -121,6 +121,81 @@ And finally, here's a demo of `animationType="cube"`:
 
 There is also an animation type of `'none'` if you need to disable animations.
 
+## Customizing Animation Type Per-Route
+
+If you need, you can configure the animation type on a per-route basis by adding
+an `animationType` prop to a specific route.  As an example, consider that we took
+our previous example and had a separate route for each page:
+
+```javascript
+import React, { Component } from 'react';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import { NativeRouter, Route } from 'react-router-native';
+import Stack from 'react-router-native-stack';
+
+function Home({ history }) {
+  return (
+    <View style={styles.screen}>
+      <Text>Home Page</Text>
+
+      <Button title="Pizza Page" onPress={() => history.push('/page/pizza')} />
+
+      <Button title="Taco Page" onPress={() => history.push('/page/taco')} />
+
+      <Button title="Hamburger Page" onPress={() => history.push('/page/hamburger')} />
+    </View>
+  );
+}
+
+function Page({ history, match }) {
+  return (
+    <View style={styles.screen}>
+      <Text>You are on a {match.url.replace('/page/', '')} Page!</Text>
+
+      <Button title="Go Back" color="red" onPress={() => history.goBack()} />
+
+      <Button title="Pizza Page" onPress={() => history.push('/page/pizza')} />
+
+      <Button title="Taco Page" onPress={() => history.push('/page/taco')} />
+
+      <Button title="Hamburger Page" onPress={() => history.push('/page/hamburger')} />
+    </View>
+  );
+}
+
+export default class App extends Component {
+  render() {
+    return (
+      <NativeRouter>
+        <Stack>
+          <Route exact path="/" component={Home} />
+          <Route path="/page/pizza" component={Page} />
+          <Route path="/page/taco" animationType="slide-vertical" component={Page} />
+          <Route path="/page/hamburger" component={Page} />
+        </Stack>
+      </NativeRouter>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+});
+```
+
+With this updated code we have configured the taco page to use a `slide-vertical`
+animation, but all the other pages will use the default `slide-horizontal` animation.
+The taco page will control the animation type when it pushes onto the stack, and
+when it pops off of the stack. Here's how it looks:
+
+![Per-Route Animation Type Example](https://raw.githubusercontent.com/traviskn/react-router-native-stack/master/media/per-route-animation-type-ios.gif)
+
+
 ## Known Limitations
 
 Currently the stack has no built-in support for floating headers, but that feature
