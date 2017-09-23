@@ -37,9 +37,9 @@ export default class App extends Component {
   render() {
     return (
       <NativeRouter>
-        <Stack>
-          <Route exact path="/" component={Home} />
-          <Route path="/page/:name" component={Page} />
+        <Stack renderHeader={true}>
+          <Route exact path="/" component={Home} title="Home" />
+          <Route path="/page/:name" component={Page} title="Food" />
         </Stack>
       </NativeRouter>
     );

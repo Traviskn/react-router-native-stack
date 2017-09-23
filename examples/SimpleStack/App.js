@@ -10,9 +10,9 @@ export default class App extends Component {
     return (
       <NativeRouter>
         <Stack>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/messages" component={Messages} />
-          <Route path="/messages/:messageId" component={Message} />
+          <Route exact path="/" component={Home} title="Home" />
+          <Route exact path="/messages" component={Messages} title="Messages" />
+          <Route path="/messages/:messageId" component={Message} title="Message" />
         </Stack>
       </NativeRouter>
     );
