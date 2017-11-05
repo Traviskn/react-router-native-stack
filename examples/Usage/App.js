@@ -37,7 +37,7 @@ export default class App extends Component {
   render() {
     return (
       <NativeRouter>
-        <Stack animationType="cube">
+        <Stack>
           <Route exact path="/" component={Home} />
           <Route path="/page/:name" component={Page} />
         </Stack>
