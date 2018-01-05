@@ -1,5 +1,8 @@
 # react-router-native-stack
 
+[![npm version](https://img.shields.io/npm/v/react-router-native-stack.svg?style=flat-square)](https://www.npmjs.com/package/react-router-native-stack)
+[![downloads](https://img.shields.io/npm/dm/react-router-native-stack.svg?style=flat-square)](https://www.npmjs.com/package/react-router-native-stack)
+
 A Stack component for React Router v4 on React Native.
 
 ## Disclaimer
