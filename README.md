@@ -198,6 +198,29 @@ when it pops off of the stack. Here's how it looks:
 
 ![Per-Route Animation Type Example](https://raw.githubusercontent.com/traviskn/react-router-native-stack/master/media/per-route-animation-type-ios.gif)
 
+## Nested routes
+
+Where one of the Routes in the Stack have nested Routes the default behaviour is to
+animate between pages as if you were changing to completely different route.
+
+Sometimes this behaviour is not what you want (for example when creating a page
+to show items, where items can be deep linked to, but only form part of the page).
+In this case you can add a key to the Route, and "self"-transitions are then
+ignored.
+
+```javascript
+  <Stack>
+    <Route exact path="/" component={Home} />
+    { /* animates moving to /items, but not when changing itemId */ }
+    <Route path="/items/:itemId?" component={Items} key="items"/>
+  </Stack>
+  
+  const Items = ({match}) =>
+    <View>
+       <Text>Items finder</Text>
+       <Text>Looking at item {match.params.itemId}</Text>
+    </View>
+```
 
 ## Known Limitations
 
