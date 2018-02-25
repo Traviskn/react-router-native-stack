@@ -124,6 +124,18 @@ And finally, here's a demo of `animationType="cube"`:
 
 There is also an animation type of `'none'` if you need to disable animations.
 
+## Gesture Handling Options
+
+By default the stack component allows swiping back for the `slide-horizontal` and `cube` animation types.  If you want to
+disable this, you can pass in a `gestureEnabled` prop set to false.
+
+```javascript
+// This stack will not respond to the swipe back gesture
+<Stack gestureEnabled={false}>
+  {/* Your routes here */}
+</Stack>
+```
+
 ## Customizing Animation Type Per-Route
 
 If you need, you can configure the animation type on a per-route basis by adding
