@@ -124,6 +124,16 @@ And finally, here's a demo of `animationType="cube"`:
 
 There is also an animation type of `'none'` if you need to disable animations.
 
+### Animating `history.replace()`
+
+Sometimes it is desirable to animate a route replace, i.e to animate back to a specific route (without using `history.go(-n)`).
+
+Use `replaceTransitionType` as a prop, with either `POP` or `PUSH` to animate the `REPLACE` event.
+
+```javascript
+  <Stack replaceTransitionType="POP" /> // A call to `history.replace(routePath)` will now transition using the `POP` animation type.
+```
+
 ## Gesture Handling Options
 
 By default the stack component allows swiping back for the `slide-horizontal` and `cube` animation types.  If you want to
@@ -226,7 +236,7 @@ ignored.
     { /* animates moving to /items, but not when changing itemId */ }
     <Route path="/items/:itemId?" component={Items} key="items"/>
   </Stack>
-  
+
   const Items = ({match}) =>
     <View>
        <Text>Items finder</Text>
