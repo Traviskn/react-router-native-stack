@@ -124,6 +124,28 @@ And finally, here's a demo of `animationType="cube"`:
 
 There is also an animation type of `'none'` if you need to disable animations.
 
+### Animating `history.replace()`
+
+Sometimes it is desirable to animate a route replace, i.e to animate back to a specific route (without using `history.go(-n)`).
+
+Use `replaceTransitionType` as a prop, with either `POP` or `PUSH` to animate the `REPLACE` event.
+
+```javascript
+  <Stack replaceTransitionType="POP" /> // A call to `history.replace(routePath)` will now transition using the `POP` animation type.
+```
+
+## Gesture Handling Options
+
+By default the stack component allows swiping back for the `slide-horizontal` and `cube` animation types.  If you want to
+disable this, you can pass in a `gestureEnabled` prop set to false.
+
+```javascript
+// This stack will not respond to the swipe back gesture
+<Stack gestureEnabled={false}>
+  {/* Your routes here */}
+</Stack>
+```
+
 ## Customizing Animation Type Per-Route
 
 If you need, you can configure the animation type on a per-route basis by adding
@@ -198,6 +220,29 @@ when it pops off of the stack. Here's how it looks:
 
 ![Per-Route Animation Type Example](https://raw.githubusercontent.com/traviskn/react-router-native-stack/master/media/per-route-animation-type-ios.gif)
 
+## Nested routes
+
+Where one of the Routes in the Stack have nested Routes the default behaviour is to
+animate between pages as if you were changing to completely different route.
+
+Sometimes this behaviour is not what you want (for example when creating a page
+to show items, where items can be deep linked to, but only form part of the page).
+In this case you can add a key to the Route, and "self"-transitions are then
+ignored.
+
+```javascript
+  <Stack>
+    <Route exact path="/" component={Home} />
+    { /* animates moving to /items, but not when changing itemId */ }
+    <Route path="/items/:itemId?" component={Items} key="items"/>
+  </Stack>
+
+  const Items = ({match}) =>
+    <View>
+       <Text>Items finder</Text>
+       <Text>Looking at item {match.params.itemId}</Text>
+    </View>
+```
 
 ## Known Limitations
 
