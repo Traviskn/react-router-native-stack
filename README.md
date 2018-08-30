@@ -220,6 +220,61 @@ when it pops off of the stack. Here's how it looks:
 
 ![Per-Route Animation Type Example](https://raw.githubusercontent.com/traviskn/react-router-native-stack/master/media/per-route-animation-type-ios.gif)
 
+## Specifying a Header and/or Footer component per route
+
+**Scenario 1:** Sometimes you'll want a fixed header/footer that *doesn't* animate between routes.
+**Scenario 2:** At other times you'll want to transition between routes that have *different* headers/footers.
+**Scenario 3:** And finally, you may want to transition to a route that has *no* fixed header or footer.
+
+All this is possible by specifying a `headerComponent` and/or `footerComponent` prop on your routes:
+
+```js
+export default class App extends Component {
+  render() {
+    return (
+      <NativeRouter>
+        <Stack>
+          <Route exact path="/" component={Home} headerComponent={Header} />
+          <Route exact path="/fullscreen" component={FullScreen} />
+          <Route exact path="/page/pizza" component={Page} headerComponent={PizzaHeader} />
+          <Route path="/page/:name" component={Page} headerComponent={Header} />
+        </Stack>
+      </NativeRouter>
+    );
+  }
+}
+```
+
+Go to `examples/App` to see the full setup for the above.
+
+**Scenario 1:** If your Header and/or Footer matches that of the route you're transitioning to, then that component
+will be considered "fixed" and will not be included in the transition animation.
+
+![Fixed Header Example Screen](https://raw.githubusercontent.com/traviskn/react-router-native-stack/master/media/fixed-header.gif)
+
+**Scenario 2:** If the route you're transitioning to contains a different Header/Footer than the previous route,
+then the Header/Footer for both routes will be contained *within* the transition area, and will be
+included in the transition animation.
+
+![Different Header Example Screen](https://raw.githubusercontent.com/traviskn/react-router-native-stack/master/media/different-header.gif)
+
+**Scenario 3:** If you're transitioning to/from a route that contains *no* Header/Footer, then that's treated the
+same as Scenario 2, and any Headers/Footers will be contained within the transition area. The route that
+contains no Header/Footer will obviously have none rendered, and therefore the main `component` will
+occupy the full area available.
+
+![No Header Example Screen](https://raw.githubusercontent.com/traviskn/react-router-native-stack/master/media/no-header.gif)
+
+**IMPORTANT NOTE:** The above approach makes no assumption as to the look/feel of the Header/Footer
+component, including internal animation. As the React Native world moves towards iOS and Android
+apps being built simultaneously, using custom header/footer/navigation components that make sense
+within the design system of the given app, it follows that we should give the developer full power
+over how to animate the mounting/unmounting of the Header and Footer components themselves (as well
+as the elements within them).
+
+Using the `headerComponent` and `footerComponent` props is a simple way to either include or exclude
+components from the route transition animation.
+
 ## Nested routes
 
 Where one of the Routes in the Stack have nested Routes the default behaviour is to
@@ -300,4 +355,3 @@ this. For now know that the Stack is just one of several components that you can
 combine with React Router to enable just about any navigation pattern you need!
 
 Check out the `examples/` folder in this repository for more usage examples.
-
