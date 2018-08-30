@@ -270,7 +270,9 @@ component, including internal animation. As the React Native world moves towards
 apps being built simultaneously, using custom header/footer/navigation components that make sense
 within the design system of the given app, it follows that we should give the developer full power
 over how to animate the mounting/unmounting of the Header and Footer components themselves (as well
-as the elements within them).
+as the elements within them). We do pass the Stack component's internal animated value into the Header
+and/or Footer component you provide as an `animatedValue` prop that you can use to build your own
+animations that run in sync with the Stack's animations.
 
 Using the `headerComponent` and `footerComponent` props is a simple way to either include or exclude
 components from the route transition animation.
@@ -301,8 +303,11 @@ ignored.
 
 ## Known Limitations
 
-Currently the stack has no built-in support for floating headers, but that feature
-is a work in progress! I hope to get something working soon.
+Currently the stack has no built-in animations for headers or footers, but that
+feature is a work in progress! We do pass down the Stack component's internal
+animated value as a prop to the header and/or footer components you add as props
+to your routes, so you can potentialy build your own custom animation. We hope to
+get more options working soon.
 
 Many stack navigators keep all screens in the stack mounted when you push new
 screens onto the stack.  This library is different, in that it unmounts the previous
