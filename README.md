@@ -301,6 +301,33 @@ ignored.
     </View>
 ```
 
+## `isAnimating` handler
+
+Sometimes you'll want your app to respond a certain way while a route transition animation
+is occurring. For example you may want to prevent custom `<Link>`'s  and `<Button>`'s from
+performing their usual behaviour (manipulating the `history`) should a route transition be
+occurring at that very moment. This helps prevent bugs around users pressing the "back" button
+before the current route has finished animating in. To this end, you can pass the `Stack` an
+`isAnimating` function which will be called with a boolean value based on the current
+state of the route transition.
+
+```javascript
+<Stack
+  animationType='slide-horizontal'
+  isAnimating={(value) => {
+    reduxStore.dispatch(myActionHere(value));
+  }}
+>
+  <Route exact= path='/' component={Home} />
+  <Route path='/page/:name' component={Page} />
+</Stack>
+```
+
+One way of handling the above scenario would be to use a redux dispatcher as my `isAnimating`
+handler and subsequently have all my `<Button>`'s and `<Link>`'s subscribe to the necessary bit
+of global state to determine whether to `disable` themselves or not. But ultimately, what your
+`isAnimating` function looks like, and how you leverage it, is up to you!
+
 ## Known Limitations
 
 Currently the stack has no built-in animations for headers or footers, but that
