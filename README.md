@@ -250,20 +250,20 @@ Go to `examples/App` to see the full setup for the above.
 **Scenario 1:** If your Header and/or Footer matches that of the route you're transitioning to, then that component
 will be considered "fixed" and will not be included in the transition animation.
 
-![Fixed Header Example Screen](https://raw.githubusercontent.com/traviskn/react-router-native-stack/master/media/fixed-header.gif)
+<img src="https://raw.githubusercontent.com/traviskn/react-router-native-stack/master/media/fixed-header.gif" width="350" />
 
 **Scenario 2:** If the route you're transitioning to contains a different Header/Footer than the previous route,
 then the Header/Footer for both routes will be contained *within* the transition area, and will be
 included in the transition animation.
 
-![Different Header Example Screen](https://raw.githubusercontent.com/traviskn/react-router-native-stack/master/media/different-header.gif)
+<img src="https://raw.githubusercontent.com/traviskn/react-router-native-stack/master/media/different-header.gif" width="350" />
 
 **Scenario 3:** If you're transitioning to/from a route that contains *no* Header/Footer, then that's treated the
 same as Scenario 2, and any Headers/Footers will be contained within the transition area. The route that
 contains no Header/Footer will obviously have none rendered, and therefore the main `component` will
 occupy the full area available.
 
-![No Header Example Screen](https://raw.githubusercontent.com/traviskn/react-router-native-stack/master/media/no-header.gif)
+<img src="https://raw.githubusercontent.com/traviskn/react-router-native-stack/master/media/no-header.gif" width="350" />
 
 **IMPORTANT NOTE:** The above approach makes no assumption as to the look/feel of the Header/Footer
 component, including internal animation. As the React Native world moves towards iOS and Android
