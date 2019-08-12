@@ -1,0 +1,1 @@
+Object.defineProperty(exports,"__esModule",{value:true});Object.defineProperty(exports,"matchPath",{enumerable:true,get:function get(){return _reactRouterNative.matchPath;}});Object.defineProperty(exports,"withRouter",{enumerable:true,get:function get(){return _reactRouterNative.withRouter;}});var _reactRouterNative=require("react-router-native");
