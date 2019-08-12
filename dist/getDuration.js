@@ -1,0 +1,1 @@
+Object.defineProperty(exports,"__esModule",{value:true});exports.default=getTiming;var _animationTypes=require("./animationTypes");function getTiming(animationType,transitionType){switch(animationType){case _animationTypes.FADE_VERTICAL:if(transitionType==='PUSH'){return 230;}return 350;default:return 500;}}
