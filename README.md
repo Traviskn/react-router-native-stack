@@ -105,8 +105,8 @@ when you reach the beginning index.
 
 ## Animation Options
 
-In the examples so far you have seen the default iOS transition animation,
-`'slide-horizontal'`. In addition to that the stack also supports `'slide-vertical'`,
+In the examples so far you have seen the default iOS transition animations,
+`'slide-horizontal'` and `'fade-horizontal'`. In addition to that the stack also supports `'slide-vertical'`,
 `'fade-vertical'`, and `'cube'`.
 
 if you add an `animationType="slide-vertical"` prop to the stack in the previous
